@@ -13,21 +13,32 @@ let keywords = ["10 самых популярных шрифтов от Google",
 let keyword = keywords[getRandom(0, keywords.length)];
 let btnK = document.getElementsByName("btnK")[0];
 let links = document.links;
+let googleInput = document.getElementsByName("q")[0];
 
 if(btnK !== undefined) {
-  document.getElementsByName("q")[0].value = keyword;
-  document.getElementsByName("btnK")[0].click();
+  //console.log(keyword);
+  let i = 0;
+  let timerId = setInterval(()=> {
+    googleInput.value += keyword[i];
+    i++;
+    if (i == keyword.length) {
+      clearInterval(timerId);
+      btnK.click();
+    }
+  },500);
 } else {
   for (let i = 0; i < links.length; i++) {
     if (links[i].href.indexOf("napli.ru") !== -1) {
       let link = links[i]
-      console.log("Нашел строку " + links[i]);
-      link.click();
+      //console.log("Нашел строку " + links[i]);
+      setTimeout(()=>{
+        link.click();
+      }, getRandom(1500,4000));
       break;
     }
   }
 }
 
 function getRandom(min, max) {
-return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 }
